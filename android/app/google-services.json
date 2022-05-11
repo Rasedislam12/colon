@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "314581554120",
+    "project_id": "mrchat-792db",
+    "storage_bucket": "mrchat-792db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314581554120:android:33855bc6fadb52e08166fd",
+        "android_client_info": {
+          "package_name": "com.example.dev2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314581554120-rnq7721gpuqdkokq2nfsfqohcrif2ksi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2XTiRaCSNk5VFTz0BbD9hCiGz9JzJ2bc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314581554120-rnq7721gpuqdkokq2nfsfqohcrif2ksi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314581554120:android:ca6dda06ed0125188166fd",
+        "android_client_info": {
+          "package_name": "com.raiverark.mr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314581554120-rnq7721gpuqdkokq2nfsfqohcrif2ksi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2XTiRaCSNk5VFTz0BbD9hCiGz9JzJ2bc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314581554120-rnq7721gpuqdkokq2nfsfqohcrif2ksi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
