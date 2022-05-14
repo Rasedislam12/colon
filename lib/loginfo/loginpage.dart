@@ -1,4 +1,5 @@
 import 'package:dev2/home/homepage.dart';
+import 'package:dev2/home/page.dart';
 import 'package:dev2/loginfo/Regpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -67,8 +68,8 @@ class _loginpageState extends State<loginpage> {
                       password: passwordeditingcontolloer.text);
 
               if (userCredential.user!.email != null) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => fasthome()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => page1()));
               }
             } catch (e) {}
           },

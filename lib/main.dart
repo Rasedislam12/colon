@@ -1,3 +1,5 @@
+import 'package:dev2/home/homepage.dart';
+import 'package:dev2/home/page.dart';
 import 'package:dev2/loginfo/loginpage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +34,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: loginpage(),
+      body: page1(),
     );
   }
 }

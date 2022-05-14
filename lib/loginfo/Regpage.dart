@@ -1,4 +1,5 @@
 import 'package:dev2/home/homepage.dart';
+import 'package:dev2/home/page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,7 @@ class _RegpageState extends State<Regpage> {
                           password: passwordeditingcontoller.text);
                   if (userCredential.user!.email != null) {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => fasthome()));
+                        MaterialPageRoute(builder: (context) => page1()));
                   }
                 } catch (e) {}
               },
