@@ -9,21 +9,27 @@ class page1 extends StatefulWidget {
 }
 
 class _page1State extends State<page1> {
-  TextEditingController titlecontroller = TextEditingController();
-  TextEditingController desciptioncontoller = TextEditingController();
+  late TextEditingController titlecontroller;
+  late TextEditingController desciptioncontoller;
 
   List datacollect = [];
+  late String docmentid;
+  bool isloding = false;
   Getdata() {
     FirebaseFirestore.instance
         .collection('datatest')
         .get()
         .then((QuerySnapshot querySnapshot) {
-      datacollect = querySnapshot.docs;
+      setState(() {
+        datacollect = querySnapshot.docs;
+      });
     });
   }
 
   @override
   void initState() {
+    titlecontroller = TextEditingController();
+    desciptioncontoller = TextEditingController();
     Getdata();
     super.initState();
   }
@@ -32,77 +38,137 @@ class _page1State extends State<page1> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-            child: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: titlecontroller,
-            decoration: InputDecoration(
-                hintText: 'title', filled: true, fillColor: Colors.grey[200]),
+            child: SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: titlecontroller,
+              decoration: InputDecoration(
+                  hintText: 'title', filled: true, fillColor: Colors.grey[200]),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: desciptioncontoller,
-            decoration: InputDecoration(
-                hintText: 'description',
-                filled: true,
-                fillColor: Colors.grey[200]),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: desciptioncontoller,
+              decoration: InputDecoration(
+                  hintText: 'description',
+                  filled: true,
+                  fillColor: Colors.grey[200]),
+            ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  FirebaseFirestore.instance
-                      .collection("datatest")
-                      .add({
-                        "title": titlecontroller.text,
-                        "description": desciptioncontoller.text
-                      })
-                      .then((value) => print('data added'))
-                      .catchError((error) => print("data not added"))
-                      .then((value) => {
-                            desciptioncontoller.clear(),
-                            titlecontroller.clear()
-                          });
-                },
-                child: Text('Add')),
-            ElevatedButton(onPressed: () {}, child: Text('Update'))
-          ],
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height / 1.5,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            itemCount: datacollect.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                trailing: Container(
-                  height: 30,
-                  width: 100,
-                  child: Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          )),
-                      IconButton(onPressed: () {}, icon: Icon(Icons.edit))
-                    ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      isloding = true;
+                    });
+                    FirebaseFirestore.instance
+                        .collection("datatest")
+                        .add({
+                          "title": titlecontroller.text,
+                          "description": desciptioncontoller.text
+                        })
+                        .then((value) => print('data added'))
+                        .catchError((error) => print("data not added"))
+                        .then((value) => {
+                              desciptioncontoller.clear(),
+                              titlecontroller.clear(),
+                              Getdata(),
+                              setState(() {
+                                isloding = false;
+                              })
+                            });
+                  },
+                  child: Text('Add')),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      isloding = true;
+                    });
+                    FirebaseFirestore.instance
+                        .collection('datatest')
+                        .doc(docmentid)
+                        .update({
+                          "title": titlecontroller.text,
+                          'description': desciptioncontoller.text,
+                        })
+                        .then((value) => print('data succesfully update'))
+                        .catchError((error) => print('data not updated$error'))
+                        .then((value) => {
+                              titlecontroller.clear(),
+                              desciptioncontoller.clear(),
+                              Getdata(),
+                              setState(() {
+                                isloding = false;
+                              })
+                            });
+                  },
+                  child: Text('Update'))
+            ],
+          ),
+          isloding
+              ? CircularProgressIndicator()
+              : Container(
+                  height: MediaQuery.of(context).size.height / 1.5,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    itemCount: datacollect.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        trailing: Container(
+                          height: 30,
+                          width: 100,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isloding = true;
+                                    });
+                                    FirebaseFirestore.instance
+                                        .collection('datatest')
+                                        .doc(datacollect[index].id)
+                                        .delete()
+                                        .then(
+                                            (value) => print('delate success'))
+                                        .then((value) {
+                                      Getdata();
+                                      setState(() {
+                                        isloding = false;
+                                      });
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  )),
+                              IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      docmentid = datacollect[index].id;
+                                      titlecontroller.text =
+                                          datacollect[index]['title'];
+                                      desciptioncontoller.text =
+                                          datacollect[index]['description'];
+                                    });
+                                  },
+                                  icon: Icon(Icons.edit))
+                            ],
+                          ),
+                        ),
+                        title: Text(datacollect[index]['title']),
+                        subtitle: Text(datacollect[index]['description']),
+                      );
+                    },
                   ),
-                ),
-                title: Text(datacollect[index]['title']),
-                subtitle: Text(datacollect[index]['description']),
-              );
-            },
-          ),
-        )
-      ],
+                )
+        ],
+      ),
     )));
   }
 }
