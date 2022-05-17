@@ -38,6 +38,8 @@ dependencies:
   firebase_auth: 
   cloud_firestore: 
   permission_handler:
+  sqflite: ^2.0.2+1
+  path_provider: ^2.0.10
   
 
 dev_dependencies:

@@ -113,6 +113,37 @@ class _page1State extends State<page1> {
           ),
           isloding
               ? CircularProgressIndicator()
+              // : FutureBuilder(
+              //     future:
+              //         FirebaseFirestore.instance.collection("datatest").get(),
+              //     builder: (BuildContext context,
+              //         AsyncSnapshot<QuerySnapshot> queryshanpshot) {
+              //       if (queryshanpshot.hasError) {
+              //         return Text("Something went wrong");
+              //       }
+
+              //       if (queryshanpshot.hasData) {
+              //         return Text('Data not found');
+              //       }
+
+              //       if (queryshanpshot.connectionState ==
+              //           ConnectionState.done) {
+              //         List<DocumentSnapshot> datacollect =
+              //             queryshanpshot.data!.docs;
+
+              //         return ListView(
+              //           children: datacollect.map((data) {
+              //             return ListTile(
+              //               title: Text(data['title']),
+              //               subtitle: Text(data['description']),
+              //             );
+              //           }).toList(),
+              //         );
+              //       }
+
+              //       return Text("loding.....");
+              //     }),
+
               : Container(
                   height: MediaQuery.of(context).size.height / 1.5,
                   width: MediaQuery.of(context).size.width,
