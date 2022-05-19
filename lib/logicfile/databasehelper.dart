@@ -68,6 +68,18 @@ CREATE TABLE customer(
     return await db.insert('customer', customermodel().tomap());
   }
 
+  Future<List<customermodel>> getdata() async {
+    Database db = await instance.database;
+
+    var customer = await db.query('customer', orderBy: 'id');
+
+    List<customermodel> Customerlist = customer.isNotEmpty
+        ? customer.map((data) => customermodel.frommap(data)).toList()
+        : [];
+
+    return Customerlist;
+  }
+
   // Future<int> addcustomer(databasemodel Databasemodel) async {
   //   Database db = await instance.database;
   //   return await db.insert('customer', databasemodel().tomap());

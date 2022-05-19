@@ -1,3 +1,4 @@
+import 'package:dev2/home/api.dart';
 import 'package:dev2/home/fast2.dart';
 import 'package:dev2/home/homepage.dart';
 import 'package:dev2/home/page.dart';
@@ -37,7 +38,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: sqflite(),
+      body: api(),
     );
   }
 }
